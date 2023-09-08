@@ -18,22 +18,23 @@
                     {% endif %}
                     <form method="POST">
                         {% csrf_token %}
+                        <div class="d-grid gap-3">
+
                         <input type="text" class="form-control mb-2" placeholder="Enter name" name="name"
                             value="{{form.data.name}}" />
                         <input type="text" class="form-control mb-2" placeholder="Enter price" name="price"
                             value="{{form.data.price }}" />
-                        <select>
-                            {% for brandname in brands %}
-                            <option class="form-control mb-2" value="{{form.data.brand }}"> {{brandname}} </option>
-                            {% endfor %}
-                        </select>
-
                         <input type="text" class="form-control mb-2" placeholder="Enter Description (300 characters max)" name="description"
                             value="{{form.data.description }}" />
                         <input type="number" class="form-control mb-2" placeholder="Enter how many stock" name="stock"
-                            value="{{form.data.stock }}" />                        
-
+                            value="{{form.data.stock }}" />       
+                        <select name="{{ form.brand.name }}" class="form-select" >
+                            {% for value, label in form.brand.field.choices %}
+                                <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
                         <input type="submit" class="btn btn-primary" value="Send" />
+                    </div>
                     </form>
                 </div>
             </div>

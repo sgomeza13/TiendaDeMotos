@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if form.errors %}
+<ul id="errors" class="alert alert-danger list-unstyled">
+    {% for field, errors in form.errors.items %}
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+    {% endfor %}
+</ul>
+{% endif %}
+<h1>Ingresar</h1>
+<form method="POST">
+    {% csrf_token %}
+    <a>Ingrese su correo</a>
+    <input type="text" class="form-control mb-2"  name="email" value="{{form.data.email}}" />
+    <a>Ingrese su contraseña *</a>
+    <input type="password" class="form-control mb-2" name="password" value="{{form.data.password }}" />
+
+
+    <input type="submit" class="btn btn-primary" value="Ingresar" />
+</form>
+
+{% endblock %}
