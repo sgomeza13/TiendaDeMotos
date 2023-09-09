@@ -115,7 +115,8 @@ class LoginView(View):
              
             return render(request,self.template_name, viewData)
 
-
-def logout_view(request):
-    logout(request)
-    return redirect('login')
+class LogOutView(View):
+#def logout_view(request):
+    def get(self, request):
+        logout(request)
+        return redirect('home')
