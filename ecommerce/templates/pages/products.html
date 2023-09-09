@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 col-lg-3 mb-2">
+        <div class="card">
+            <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
+            <div class="card-body text-center">
+                <a href="{% url 'product' id=product.id  %}" class="btn bg-primary text-white">{{product.id}}:
+                    {{product.name}}</a>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}
