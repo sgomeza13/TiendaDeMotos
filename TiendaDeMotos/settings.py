@@ -130,3 +130,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # This is the default that allows us to log in via username
     'ecommerce.authentication_backends.EmailAuthBackend'
 ]
+
+LOGIN_URL = 'login'

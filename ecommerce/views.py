@@ -1,22 +1,39 @@
+from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, ListView, View, CreateView
 from .forms import ProductForm, CustomerForm, LoginForm, CustomerChangeForm
 from .models import Product
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Create your views here.
 class HomeView(TemplateView):
     template_name = "pages/home.html"
+    def get(self, request):
+        viewData={
+            "isSuperUser":0
+        }
 
-class ProductCreateView(View):
+        if(request.user.is_superuser):
+            viewData['isSuperUser'] = 1
+        return render(request, self.template_name, viewData)
+
+class ErrorView(TemplateView):
+    template_name = "error.html"
+
+class ProductCreateView(LoginRequiredMixin,View):
     template_name = 'pages/createproduct.html'
+
     form = ProductForm()
     viewData = {}
     viewData["title"] = "Create product"
     viewData["form"] = form
     def get(self, request):
-
-        return render(request, self.template_name, self.viewData)
+        if(request.user.is_superuser):
+            return render(request, self.template_name, self.viewData)
+        else:
+            return redirect('error')
     def post(self, request):
         form = ProductForm(request.POST)
         viewData = {}
@@ -24,7 +41,7 @@ class ProductCreateView(View):
         print(form.data)
         if form.is_valid():
             form.save()
-            return redirect("home")
+            return redirect("products")
         else:
 
             return render(request, self.template_name, viewData)
@@ -38,13 +55,18 @@ class ProductView(View):
     template_name = 'pages/product.html'
     def get(self, request, id):
         viewData = {}
+        if(request.user.is_superuser):
+            viewData['isSuperUser'] = 1
+        else:
+            viewData['isSuperUser'] = 0
+
         try:
             product_id = int(id)
             if product_id < 1:
                 raise ValueError("Product id must be 1 or greater")
             product = get_object_or_404(Product, pk=product_id)
         except:
-            return redirect('home')
+            return redirect('error')
 
         viewData["product"] = product
         
@@ -87,5 +109,13 @@ class LoginView(View):
         if(user != None):
             login(request, user)
             return redirect('home')
-        else:  
-            return render(request,self.template_name)
+        else:
+            viewData = {}
+            viewData["error"] = "Usuario o contraseña incorrectos"
+             
+            return render(request,self.template_name, viewData)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')

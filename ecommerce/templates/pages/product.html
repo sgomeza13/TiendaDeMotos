@@ -37,6 +37,8 @@
 
 <form method="POST">
     {% csrf_token %}
+    {% if isSuperUser == 1 %}
     <input type="submit" class="btn btn-danger" value="Eliminar Producto" />   
+    {%endif%}
 </form>
 {% endblock %}

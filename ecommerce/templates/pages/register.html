@@ -1,33 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Registo de usuario</div>
+                <div class="card-body">
+                    {% if form.errors %}
+                    <ul id="errors" class="alert alert-danger list-unstyled">
+                        {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <h1>Registro de Usuario</h1>
+                    <form method="POST" action="{% url 'register' %}">
+                        {% csrf_token %}
+                        <div class="d-grid gap-3">
 
-{% if form.errors %}
-<ul id="errors" class="alert alert-danger list-unstyled">
-    {% for field, errors in form.errors.items %}
-    {% for error in errors %}
-    <li>{{ error }}</li>
-    {% endfor %}
-    {% endfor %}
-</ul>
-{% endif %}
-<h1>Registro de Usuario</h1>
-<form method="POST" action="{% url 'register' %}">
-    {% csrf_token %}
-    <a>Ingrese su nombre</a>
-    <input type="text" class="form-control mb-2" placeholder="Jhon" name="first_name" value="{{form.data.first_name}}" />
-    <a>Ingrese su apellido</a>
-    <input type="text" class="form-control mb-2" placeholder="Doe" name="last_name" value="{{form.data.last_name}}" />
-    <a>Ingrese su correo electronico *</a>
-    <input type="text" class="form-control mb-2" placeholder="ejemplo@ejemplo.com" name="email" value="{{form.data.email}}" />
-    <a>Cree una contraseña *</a>
-    <input type="password" class="form-control mb-2" placeholder="ContraseñaDeEjemplo123" name="password" value="{{form.data.password }}" />
-      <a>Ingrese su dirección *</a>
-    <input type="text" class="form-control mb-2" placeholder="Avenida 113b #324-123" name="address" value="{{form.data.address }}" />
-    <select name="{{form.city.name}}" class="form-select">
-        {% for value, label in form.city.field.choices %}
-        <option value="{{ value }}">{{ label }}</option>
-    {% endfor %}
-    </select>
-    <input type="submit" class="btn btn-primary" value="Send" />
-</form>
+                            <a>Ingrese su nombre</a>
+                            <input type="text" class="form-control mb-2" placeholder="Jhon" name="first_name"
+                                value="{{form.data.first_name}}" />
+                            <a>Ingrese su apellido</a>
+                            <input type="text" class="form-control mb-2" placeholder="Doe" name="last_name"
+                                value="{{form.data.last_name}}" />
+                            <a>Ingrese su correo electronico *</a>
+                            <input type="text" class="form-control mb-2" placeholder="ejemplo@ejemplo.com" name="email"
+                                value="{{form.data.email}}" />
+                            <a>Cree una contraseña *</a>
+                            <input type="password" class="form-control mb-2" placeholder="ContraseñaDeEjemplo123"
+                                name="password" value="{{form.data.password }}" />
+                            <a>Ingrese su dirección *</a>
+                            <input type="text" class="form-control mb-2" placeholder="Avenida 113b #324-123"
+                                name="address" value="{{form.data.address }}" />
+                            <select name="{{form.city.name}}" class="form-select">
+                                {% for value, label in form.city.field.choices %}
+                                <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="submit" class="btn btn-primary" value="Send" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

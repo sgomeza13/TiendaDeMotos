@@ -2,6 +2,11 @@
 {% block title %}Home Page{% endblock %}
 {% block content %}
 <h1 class="text-center">Bienvenido</h1>
-
-</div>
+{% if isSuperUser == 1 %}
+<div class="container">
+    <div class="col-md-12 text-center">
+    <big><a href="{% url 'create' %}" class="badge bg-primary text-wrap text-decoration-none">Añadir productos</a></big>
+        </div>
+    </div>
+{%endif%}
 {% endblock %}

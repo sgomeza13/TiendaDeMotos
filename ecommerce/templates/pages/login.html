@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% if form.errors %}
+{% if error %}
 <ul id="errors" class="alert alert-danger list-unstyled">
-    {% for field, errors in form.errors.items %}
-    {% for error in errors %}
+
     <li>{{ error }}</li>
-    {% endfor %}
-    {% endfor %}
+
 </ul>
 {% endif %}
 <h1>Ingresar</h1>
