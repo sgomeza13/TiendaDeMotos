@@ -6,9 +6,11 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     brand = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
+    reference = models.CharField(max_length=50)
     price = models.IntegerField()
     stock = models.IntegerField()
 
+#Se define para poder crear un super ususario desde la terminal con python manage.py createsuperuser
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:

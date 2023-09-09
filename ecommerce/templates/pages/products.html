@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<!-- Search Bar  -->
+<div class="d-grid gap-3">
+    <div class="input-group row d-flex justify-content-center">
+        <form method="GET">
+        {% csrf_token %}
+        <div class="input-group mb-3 text-align:center">
+            <input name="q" type="text" class="form-control text-center " placeholder="Buscar por nombre o referencia" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary bg-secondary text-light" type="submit">Buscar</button>
+              <button class="btn btn-outline-secondary bg-primary text-light" type="submit" value="" name="q">Reset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+  
+
+<!-- Products  -->
 
 <div class="row">
     {% for product in products %}
@@ -8,12 +25,14 @@
         <div class="card">
             <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
             <div class="card-body text-center">
-                <a href="{% url 'product' id=product.id  %}" class="btn bg-primary text-white">{{product.id}}:
+                <a href="{% url 'product' id=product.id  %}" class="btn bg-primary text-white">
                     {{product.name}}</a>
-
+                <a class="btn bg-secondary text-light" href="{% url 'product' id=product.id  %}">{{product.price}}$</a>
             </div>
         </div>
     </div>
     {% endfor %}
+</div>
+
 </div>
 {%endblock%}

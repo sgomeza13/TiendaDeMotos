@@ -12,6 +12,8 @@
                 <h3 class="card-title">Nombre:</h3>
                 <p class="fst-normal">{{product.name}}</p>
 
+                <h5 class="fw-bold">Referencia:</h5>
+                <p class="fst-normal">{{product.reference}}</p>
 
                 <h5 class="fw-bold">Marca: </h5>
                 <p class="fst-normal">{{product.brand}}</p>
@@ -37,7 +39,7 @@
 
 <form method="POST">
     {% csrf_token %}
-    {% if isSuperUser == 1 %}
+    {% if user.is_superuser == True%}
     <input type="submit" class="btn btn-danger" value="Eliminar Producto" />   
     {%endif%}
 </form>

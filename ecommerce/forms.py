@@ -5,14 +5,13 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name','price', 'description','brand','stock']
+        fields = ['name','price', 'description','brand','stock', 'reference']
     BRAND_CHOICES = [
         ("Kawasaki", "Kawasaki"),
         ("Honda", "Honda"),
         ("Yamaha", "Yamaha"),
         ("Suzuki", "Suzuki"),
     ]
-
     brand = forms.ChoiceField(label="Brand", choices=BRAND_CHOICES)
 
 

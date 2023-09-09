@@ -27,7 +27,9 @@
                         <input type="text" class="form-control mb-2" placeholder="Enter Description (300 characters max)" name="description"
                             value="{{form.data.description }}" />
                         <input type="number" class="form-control mb-2" placeholder="Enter how many stock" name="stock"
-                            value="{{form.data.stock }}" />       
+                            value="{{form.data.stock }}" />
+                        <input type="text" class="form-control mb-2" placeholder="Enter the exact reference" name="reference"
+                            value="{{form.data.reference }}" />                                    
                         <select name="{{ form.brand.name }}" class="form-select" >
                             {% for value, label in form.brand.field.choices %}
                                 <option value="{{ value }}">{{ label }}</option>

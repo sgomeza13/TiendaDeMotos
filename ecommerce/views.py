@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, ListView, View, CreateView
@@ -6,18 +7,12 @@ from .forms import ProductForm, CustomerForm, LoginForm, CustomerChangeForm
 from .models import Product
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 # Create your views here.
 class HomeView(TemplateView):
     template_name = "pages/home.html"
-    def get(self, request):
-        viewData={
-            "isSuperUser":0
-        }
 
-        if(request.user.is_superuser):
-            viewData['isSuperUser'] = 1
-        return render(request, self.template_name, viewData)
 
 class ErrorView(TemplateView):
     template_name = "error.html"
@@ -49,17 +44,20 @@ class ProductCreateView(LoginRequiredMixin,View):
 class ProductListView(ListView):
     model = Product
     template_name = 'pages/products.html'
-    context_object_name = 'products'
+    context_object_name = "products"
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        if not query:
+            query = ""
+        products = Product.objects.filter(
+            Q(name__icontains=query) | Q(reference__icontains=query)
+        )
+        return products
 
 class ProductView(View):
     template_name = 'pages/product.html'
     def get(self, request, id):
         viewData = {}
-        if(request.user.is_superuser):
-            viewData['isSuperUser'] = 1
-        else:
-            viewData['isSuperUser'] = 0
-
         try:
             product_id = int(id)
             if product_id < 1:
@@ -74,7 +72,7 @@ class ProductView(View):
     def post(self, request, id):
         product = get_object_or_404(Product, pk=id)
         product.delete()
-        return redirect('list')
+        return redirect('products')
     
     
 class RegisterView(CreateView):
@@ -116,7 +114,6 @@ class LoginView(View):
             return render(request,self.template_name, viewData)
 
 class LogOutView(View):
-#def logout_view(request):
     def get(self, request):
         logout(request)
         return redirect('home')
