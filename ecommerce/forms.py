@@ -7,10 +7,12 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ['name','price', 'description','brand','stock', 'reference']
     BRAND_CHOICES = [
+        ("","Sin Marca/Cualquier Marca"),
         ("Kawasaki", "Kawasaki"),
         ("Honda", "Honda"),
         ("Yamaha", "Yamaha"),
         ("Suzuki", "Suzuki"),
+        
     ]
     brand = forms.ChoiceField(label="Brand", choices=BRAND_CHOICES)
 

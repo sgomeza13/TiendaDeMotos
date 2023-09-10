@@ -45,14 +45,32 @@ class ProductListView(ListView):
     model = Product
     template_name = 'pages/products.html'
     context_object_name = "products"
+    form = ProductForm()
     def get_queryset(self):
-        query = self.request.GET.get("q")
+        query = self.request.GET.get("name")
+        brand = self.request.GET.get("brand")
+        minprice = self.request.GET.get("minprice")
+        maxprice = self.request.GET.get("maxprice")
         if not query:
             query = ""
-        products = Product.objects.filter(
-            Q(name__icontains=query) | Q(reference__icontains=query)
-        )
+        if not brand:
+            brand = ""
+        if not minprice:
+            minprice = 0
+        if not maxprice:
+            maxprice = 9999999999
+        
+        filters_query = Q(name__icontains=query) | Q(reference__icontains=query)  
+        filters_query &= Q(brand__icontains=brand)
+        filters_query &= Q(price__gte=minprice) & Q(price__lte=maxprice)
+        products = Product.objects.filter(filters_query)
         return products
+    #Obtiene los valores de las marcas del ProductForms para usarlos en el Select
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form  
+        return context
+
 
 class ProductView(View):
     template_name = 'pages/product.html'
