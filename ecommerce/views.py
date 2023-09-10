@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.db.models.query import QuerySet
+from django.forms import TextInput
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from django.views.generic import TemplateView, ListView, View, CreateView
-from .forms import ProductForm, CustomerForm, LoginForm, CustomerChangeForm
+from django.views.generic import TemplateView, ListView, View, CreateView, UpdateView
+from .forms import ProductForm, CustomerForm
 from .models import Product
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 
 # Create your views here.
@@ -17,18 +18,15 @@ class HomeView(TemplateView):
 class ErrorView(TemplateView):
     template_name = "error.html"
 
-class ProductCreateView(LoginRequiredMixin,View):
+class ProductCreateView(PermissionRequiredMixin,View):
     template_name = 'pages/createproduct.html'
-
+    permission_required = 'auth.is_superuser'
     form = ProductForm()
     viewData = {}
     viewData["title"] = "Create product"
     viewData["form"] = form
     def get(self, request):
-        if(request.user.is_superuser):
-            return render(request, self.template_name, self.viewData)
-        else:
-            return redirect('error')
+        return render(request, self.template_name, self.viewData)
     def post(self, request):
         form = ProductForm(request.POST)
         viewData = {}
@@ -40,6 +38,22 @@ class ProductCreateView(LoginRequiredMixin,View):
         else:
 
             return render(request, self.template_name, viewData)
+
+class ProductUpdateView(PermissionRequiredMixin,UpdateView):
+    model = Product
+    permission_required = 'auth.is_superuser'
+    template_name = "pages/update.html"
+    fields = [
+        "name",
+        "reference",
+        "stock",
+        "price",
+        "brand",
+        "description"
+    ]
+
+
+    success_url = "/products"
         
 class ProductListView(ListView):
     model = Product
