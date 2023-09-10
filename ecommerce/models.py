@@ -13,4 +13,4 @@ class Product(models.Model):
 class Rating(models.Model):
     user = models.ForeignKey(CustomerUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    rating = models.SmallIntegerField(default=0)
+    rating = models.FloatField(default=0)

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 from django.views.generic import TemplateView, ListView, View, UpdateView
 from .forms import ProductForm, RatingForm
 from .models import Product, Rating
@@ -73,7 +74,9 @@ class ProductListView(ListView):
         filters_query = Q(name__icontains=query) | Q(reference__icontains=query)  
         filters_query &= Q(brand__icontains=brand)
         filters_query &= Q(price__gte=minprice) & Q(price__lte=maxprice)
+        
         products = Product.objects.filter(filters_query)
+        
         return products
     #Obtiene los valores de las marcas del ProductForms para usarlos en el Select
     def get_context_data(self, **kwargs):
@@ -94,10 +97,13 @@ class ProductView(View):
             if product_id < 1:
                 raise ValueError("Product id must be 1 or greater")
             product = get_object_or_404(Product, pk=product_id)
+            rating = Rating.objects.filter(product_id=product_id).aggregate(Avg("rating"))
+
         except:
             return redirect('error')
 
         self.viewData["product"] = product
+        self.viewData["rating"] = rating
         
         return render(request, self.template_name, self.viewData)
     def post(self, request, id):
@@ -113,16 +119,15 @@ class ProductView(View):
                 if existing_rating:
                     existing_rating.rating = form.cleaned_data['rating']
                     existing_rating.save()
-                    self.viewData["errors"] = "Updated review"
-                    return render(request, self.template_name, self.viewData)
+
+                    return redirect("products")
                 else:
                     rate = form.save(commit=False)
                     rate.user = request.user
                     rate.product = product
                     rate.save()
                     
-                    return redirect('products')
+        return redirect('products')
 
-        #return redirect('products')
     
     

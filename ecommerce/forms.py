@@ -7,7 +7,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ['name','price', 'description','brand','stock', 'reference']
     BRAND_CHOICES = [
-        ("Sin Marca/Cualquier Marca","Sin Marca/Cualquier Marca"),
+        ("","Sin Marca/Cualquier Marca"),
         ("Kawasaki", "Kawasaki"),
         ("Honda", "Honda"),
         ("Yamaha", "Yamaha"),
@@ -15,7 +15,7 @@ class ProductForm(forms.ModelForm):
         
     ]
 
-    brand = forms.ChoiceField(label="Brand", choices=BRAND_CHOICES)
+    brand = forms.ChoiceField(label="Brand", choices=BRAND_CHOICES, required=False)
 
     def clean_price(self):
         price = self.cleaned_data['price']
