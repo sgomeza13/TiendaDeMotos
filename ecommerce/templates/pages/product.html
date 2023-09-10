@@ -40,8 +40,8 @@
 <form method="POST">
     {% csrf_token %}
     {% if user.is_superuser == True%}
-    <input type="submit" class="btn btn-danger" value="Eliminar Producto" />
-    <a class="btn btn-success" href="update/{{product.id}}">Actualizar Datos</a>   
+    <input type="submit" class="btn btn-danger" value="Eliminar Producto" name="delete" />
+    <a class="btn btn-success" href="update/{{product.id}}">Actualizar Datos</a>  
     {%endif%}
 </form>
 {% endblock %}
