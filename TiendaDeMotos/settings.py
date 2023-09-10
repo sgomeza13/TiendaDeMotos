@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ecommerce.apps.EcommerceConfig'
+    'ecommerce.apps.EcommerceConfig',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -124,11 +125,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = "ecommerce.CustomerUser"
+AUTH_USER_MODEL = "account.CustomerUser"
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # This is the default that allows us to log in via username
-    'ecommerce.authentication_backends.EmailAuthBackend'
+    'account.authentication_backends.EmailAuthBackend'
 ]
 
 LOGIN_URL = 'login'

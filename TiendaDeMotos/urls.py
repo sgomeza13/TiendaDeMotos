@@ -20,6 +20,7 @@ from ecommerce.views import ErrorView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("ecommerce.urls")),
+    path('account/', include("account.urls")),
 ]
 
 handler404 = ErrorView.as_view()
