@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Product, Rating
 
 class ProductForm(forms.ModelForm):
 
@@ -15,7 +15,7 @@ class ProductForm(forms.ModelForm):
         
     ]
 
-    brand = forms.ChoiceField(label="Brand", choices=BRAND_CHOICES)
+    brand = forms.ChoiceField(label="Brand", choices=BRAND_CHOICES, required=False)
 
     def clean_price(self):
         price = self.cleaned_data['price']
@@ -28,3 +28,15 @@ class ProductForm(forms.ModelForm):
             raise forms.ValidationError("Debe haber por lo menos 1 unidad")
         return stock
 
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['rating']
+    RATING_CHOICES = [
+        (1,"1 - Calidad Mala"),
+        (2,"2 - Calidad Regular"),
+        (3,"3 - Calidad Aceptable"),
+        (4,"4 - Calidad Buena"),
+        (5,"5 - Calidad Excelente"),
+    ]
+    rating = forms.ChoiceField(label="Rating",choices=RATING_CHOICES)

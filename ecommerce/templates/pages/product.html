@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+{% if errors %}
+<ul id="errors" class="alert alert-danger list-unstyled">
+    
+    <li>{{ errors }}</li>
+
+</ul>
+{% endif %}
+
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
@@ -29,7 +38,8 @@
                 <h5 class="fw-bold">Unidades disponibles:</h5>
                 <p class="fst-normal">{{product.stock}}</p>
 
-
+                <h5 class="fw-bold">calificacion:</h5>
+                <p class="fst-normal">{{rating.rating__avg}}</p>
             </div>
         </div>
         
@@ -44,4 +54,18 @@
     <a class="btn btn-success" href="update/{{product.id}}">Actualizar Datos</a>  
     {%endif%}
 </form>
+
+<form method="POST">
+{% csrf_token %}
+{% if user.is_authenticated == True%}
+<div class="d-flex flex-column bd-highlight mb-3"> Dale una calificacion al producto
+<select name="{{ form.rating.name }}"  class="form-select p-2 bd-highlight">
+    {% for value, label in form.rating.field.choices %}
+        <option value="{{ value }}">{{ label }}</option>
+    {% endfor %}
+</select>
+</div>
+<input type="submit" class="btn btn-primary" value="Rate the product" name="rate" />
+</form>
+{%endif%}
 {% endblock %}
