@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Home Page{% endblock %}
 {% block content %}
 <h1 class="text-center">Bienvenido</h1>
@@ -8,6 +9,22 @@
     <big><a href="{% url 'create' %}" class="badge bg-primary text-wrap text-decoration-none">Añadir productos</a></big>
         </div>
     </div>
+    {%endif%}
+    <h1 class="text-center">Top 3 productos mejor calificados</h1>
 
-{%endif%}
+    <div class="card-group">
+        {% for product in products %}
+            <div class="card">
+                <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
+                <div class="card-body text-center">
+                    <a href="{% url 'product' id=product.product.id  %}" class="btn bg-primary text-white">
+                        {{product.product.name}}</a>
+                    <a class="btn bg-secondary text-light" href="{% url 'product' id=product.id  %}">{{product.product.price}}$</a>
+                </div>
+            
+        </div>
+        {% endfor %}
+    </div>
+
+
 {% endblock %}
