@@ -28,7 +28,10 @@
                 <a class="nav-link active" href="{% url 'home' %}">Inicio</a>
                 <li class="nav-item">
                 <a class="nav-link active" href="{% url 'products' %}">Productos</a>
+                
                 </li>
+                <a class="nav-link active" href="{% url 'cart' %}">Carrito</a>
+
                 {% if user.is_authenticated == False%}
                 <a class="nav-link active" href="{% url 'login' %}">Iniciar Sesion</a>
                 <a class="nav-link active" href="{% url 'register' %}">Registrarse</a>

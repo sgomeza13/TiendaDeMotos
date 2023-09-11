@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Carrito de compras</h1>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Referencia</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.referencia }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ item.precio }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <a href="{% url 'checkout' %}" class="btn btn-success">Comprar</a>
+
+  <form method="get" action="{% url 'clear_cart' %}">
+    <button type="submit" class="btn btn-danger">Limpiar Carrito</button>
+  </form>
+{% endblock %}

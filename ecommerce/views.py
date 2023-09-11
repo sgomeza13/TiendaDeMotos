@@ -8,6 +8,9 @@ from .forms import ProductForm, RatingForm
 from .models import Product, Rating
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, Avg
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 class HomeView(ListView):
@@ -37,7 +40,7 @@ class ProductCreateView(PermissionRequiredMixin,View):
     def get(self, request):
         return render(request, self.template_name, self.viewData)
     def post(self, request):
-        form = ProductForm(request.POST, request.FILES)
+        form = ProductForm(request.POST)
         viewData = {}
         viewData["form"] = form
         print(form.data)
@@ -52,11 +55,17 @@ class ProductUpdateView(PermissionRequiredMixin,UpdateView):
     model = Product
     permission_required = 'auth.is_superuser'
     template_name = "pages/update.html"
-    form_class = ProductForm
-    
+    fields = [
+        "name",
+        "reference",
+        "stock",
+        "price",
+        "brand",
+        "description"
+    ]
 
 
-    success_url = "/products/"
+    success_url = "/products"
         
 class ProductListView(ListView):
     model = Product.objects
@@ -137,6 +146,105 @@ class ProductView(View):
                     rate.save()
                     
         return redirect('products')
+    
+class CartView(View):
+    template_name = 'cart/cart.html'
 
+    def get(self, request):
+        cart_items = request.session.get('cart', [])
+        products_in_cart = []
+
+        # Retrieve product details based on product references in the cart
+        for item in cart_items:
+            try:
+                product = Product.objects.get(reference=item['reference'])
+                products_in_cart.append({
+                    'nombre': product.name,
+                    'referencia': product.reference,
+                    'cantidad': item['quantity'],
+                    'precio': product.price,
+                })
+            except Product.DoesNotExist:
+                pass
+
+        context = {
+            'cart_items': products_in_cart,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        reference = request.POST.get('reference')
+        quantity = int(request.POST.get('quantity', 1))
+
+        # Retrieve the cart from the session or create an empty cart
+        cart_items = request.session.get('cart', [])
+
+        # Check if the product is already in the cart
+        for item in cart_items:
+            if item['reference'] == reference:
+                # Update the quantity if the product is already in the cart
+                item['quantity'] += quantity
+                break
+        else:
+            # Add the product to the cart if not already present
+            cart_items.append({
+
+                'reference': reference,
+                'quantity': quantity,
+            })
+
+        # Update the cart in the session
+        request.session['cart'] = cart_items
+
+        return redirect('cart')
     
-    
+class ClearCartView(View):
+    def get(self, request):
+        # Clear the cart session data
+        request.session['cart'] = []
+        return redirect('cart')
+
+
+
+class CheckoutView(View):
+    template_name = 'checkout/checkout.html'
+
+    def get(self, request):
+        # Retrieve cart items from the session
+        cart_items = request.session.get('cart', [])
+
+        # Calculate the total price of items in the cart
+        total_price = 0
+
+        products_in_cart = []
+
+        for item in cart_items:
+            try:
+                product = Product.objects.get(reference=item['reference'])
+                products_in_cart.append({
+                    'nombre': product.name,
+                    'referencia': product.reference,
+                    'cantidad': item['quantity'],
+                    'precio': product.price,
+                })
+                total_price += product.price * item['quantity']
+            except Product.DoesNotExist:
+                pass
+
+        # Get the user information
+        user = request.user
+
+        context = {
+            'cart_items': products_in_cart,
+            'total_price': total_price,
+            'user': user,  # Include the user object in the context
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        messages.success(request, 'Order placed successfully!')
+        request.session['cart'] = []
+        return redirect('home')  # Redirect to a success page after checkout
+
