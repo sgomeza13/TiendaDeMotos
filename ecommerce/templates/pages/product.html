@@ -13,8 +13,12 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
-            <img src="{% static 'products/icono_moto.svg' %}"
-                class="img-fluid rounded-start">
+            {%if product.image%}
+            <img src="{{product.image}}" class="card-img-top img-card">
+          {%else%}
+            <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
+          {%endif%}
+
         </div>
         <div class="col-md-8">
             <div class="card-body">

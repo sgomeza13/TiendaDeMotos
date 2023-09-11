@@ -3,9 +3,10 @@ from .models import Product, Rating
 
 class ProductForm(forms.ModelForm):
 
+
     class Meta:
         model = Product
-        fields = ['name','price', 'description','brand','stock', 'reference']
+        fields = ['name','price', 'description','brand','stock', 'reference', 'image']
     BRAND_CHOICES = [
         ("","Sin Marca/Cualquier Marca"),
         ("Kawasaki", "Kawasaki"),

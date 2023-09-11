@@ -40,7 +40,7 @@ class ProductCreateView(PermissionRequiredMixin,View):
     def get(self, request):
         return render(request, self.template_name, self.viewData)
     def post(self, request):
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)
         viewData = {}
         viewData["form"] = form
         print(form.data)
@@ -55,17 +55,11 @@ class ProductUpdateView(PermissionRequiredMixin,UpdateView):
     model = Product
     permission_required = 'auth.is_superuser'
     template_name = "pages/update.html"
-    fields = [
-        "name",
-        "reference",
-        "stock",
-        "price",
-        "brand",
-        "description"
-    ]
+    form_class = ProductForm
+    
 
 
-    success_url = "/products"
+    success_url = "/products/"
         
 class ProductListView(ListView):
     model = Product.objects
