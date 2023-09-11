@@ -38,8 +38,11 @@
                 <h5 class="fw-bold">Unidades disponibles:</h5>
                 <p class="fst-normal">{{product.stock}}</p>
 
-                <h5 class="fw-bold">calificacion:</h5>
+                {% if rating == 0 %}
+                <p class="fst-normal">No hay calificaciones aun</p>
+                {%else%}
                 <p class="fst-normal">{{rating}} / 5</p>
+                {%endif%}
             </div>
         </div>
         

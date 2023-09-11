@@ -110,7 +110,10 @@ class ProductView(View):
                 raise ValueError("Product id must be 1 or greater")
             product = get_object_or_404(Product, pk=product_id)
             rating = Rating.objects.filter(product_id=product_id).aggregate(Avg("rating"))
-            rating = round(rating.get('rating__avg'),1)
+            try:
+                rating = round(rating.get('rating__avg'),1)
+            except:
+                rating = 0
         except:
             return redirect('error')
 
