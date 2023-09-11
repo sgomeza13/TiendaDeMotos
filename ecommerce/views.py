@@ -1,4 +1,6 @@
+from typing import Any
 from django.conf import settings
+from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, ListView, View, UpdateView
@@ -8,8 +10,18 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, Avg
 
 # Create your views here.
-class HomeView(TemplateView):
+class HomeView(ListView):
+    model = Product
     template_name = "pages/home.html"
+    context_object_name = "products"
+    def get_queryset(self):
+        # Calcula el promedio de calificacion de todos los productos y los ordena de manera descendiente
+        queryset = Rating.objects.annotate(average_rating=Avg('rating')).order_by('-average_rating')
+
+        # Deja solo los primeros 3
+        top_rated_products = queryset[:3]
+
+        return top_rated_products
 
 
 class ErrorView(TemplateView):
@@ -53,7 +65,7 @@ class ProductUpdateView(PermissionRequiredMixin,UpdateView):
     success_url = "/products"
         
 class ProductListView(ListView):
-    model = Product
+    model = Product.objects
     template_name = 'pages/products.html'
     context_object_name = "products"
     form = ProductForm()
@@ -98,7 +110,7 @@ class ProductView(View):
                 raise ValueError("Product id must be 1 or greater")
             product = get_object_or_404(Product, pk=product_id)
             rating = Rating.objects.filter(product_id=product_id).aggregate(Avg("rating"))
-
+            rating = round(rating.get('rating__avg'),1)
         except:
             return redirect('error')
 
@@ -119,8 +131,8 @@ class ProductView(View):
                 if existing_rating:
                     existing_rating.rating = form.cleaned_data['rating']
                     existing_rating.save()
-
-                    return redirect("products")
+                    url = f"/product/{id}"
+                    return redirect(url)
                 else:
                     rate = form.save(commit=False)
                     rate.user = request.user
