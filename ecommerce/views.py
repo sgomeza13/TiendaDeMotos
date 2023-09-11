@@ -108,8 +108,7 @@ class ProductView(View):
                 rating = round(rating.get('rating__avg'),1)
             except:
                 rating = 0
-        except Exception as error:
-            print(error)
+        except:
             return redirect('error')
 
         self.viewData["product"] = product
