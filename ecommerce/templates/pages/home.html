@@ -15,11 +15,7 @@
     <div class="card-group">
         {% for product in products %}
             <div class="card">
-                {%if product.product.image%}
-                <img src="media/{{product.product.image}}" class="card-img-top img-card">
-              {%else%}
                 <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
-              {%endif%}
                 <div class="card-body text-center">
                     <a href="{% url 'product' id=product.product.id  %}" class="btn bg-primary text-white">
                         {{product.product.name}}</a>
