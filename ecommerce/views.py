@@ -52,17 +52,11 @@ class ProductUpdateView(PermissionRequiredMixin,UpdateView):
     model = Product
     permission_required = 'auth.is_superuser'
     template_name = "pages/update.html"
-    fields = [
-        "name",
-        "reference",
-        "stock",
-        "price",
-        "brand",
-        "description"
-    ]
+    form_class = ProductForm
+    
 
 
-    success_url = "/products"
+    success_url = "/products/"
         
 class ProductListView(ListView):
     model = Product.objects
