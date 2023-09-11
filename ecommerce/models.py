@@ -8,6 +8,7 @@ class Product(models.Model):
     reference = models.CharField(max_length=50)
     price = models.IntegerField()
     stock = models.IntegerField()
+    image = models.ImageField(upload_to='uploads/', null=True, blank=True)
 
 
 class Rating(models.Model):

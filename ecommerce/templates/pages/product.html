@@ -11,10 +11,16 @@
 {% endif %}
 
 <div class="card mb-3">
+    
     <div class="row g-0">
+        
         <div class="col-md-4">
-            <img src="{% static 'products/icono_moto.svg' %}"
-                class="img-fluid rounded-start">
+            {%if product.image%}
+            <img src="{{product.image}}" class="card-img-top img-card">
+          {%else%}
+            <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
+          {%endif%}
+
         </div>
         <div class="col-md-8">
             <div class="card-body">
@@ -39,7 +45,11 @@
                 <p class="fst-normal">{{product.stock}}</p>
 
                 <h5 class="fw-bold">calificacion:</h5>
+                {% if rating == 0 %}
+                <p class="fst-normal">No hay calificaciones aun</p>
+                {%else%}
                 <p class="fst-normal">{{rating}} / 5</p>
+                {%endif%}
             </div>
         </div>
         

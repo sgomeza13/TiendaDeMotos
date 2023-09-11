@@ -37,7 +37,7 @@ class ProductCreateView(PermissionRequiredMixin,View):
     def get(self, request):
         return render(request, self.template_name, self.viewData)
     def post(self, request):
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)
         viewData = {}
         viewData["form"] = form
         print(form.data)
@@ -110,8 +110,12 @@ class ProductView(View):
                 raise ValueError("Product id must be 1 or greater")
             product = get_object_or_404(Product, pk=product_id)
             rating = Rating.objects.filter(product_id=product_id).aggregate(Avg("rating"))
-            rating = round(rating.get('rating__avg'),1)
-        except:
+            try:
+                rating = round(rating.get('rating__avg'),1)
+            except:
+                rating = 0
+        except Exception as error:
+            print(error)
             return redirect('error')
 
         self.viewData["product"] = product

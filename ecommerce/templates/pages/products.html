@@ -39,7 +39,11 @@
     {% for product in products %}
     <div class="col-md-4 col-lg-3 mb-2">
         <div class="card">
+          {%if product.image%}
+            <img src="{{product.image}}" class="card-img-top img-card">
+          {%else%}
             <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
+          {%endif%}
             <div class="card-body text-center">
                 <a href="{% url 'product' id=product.id  %}" class="btn bg-primary text-white">
                     {{product.name}}</a>
