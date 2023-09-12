@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import HomeView, ProductCreateView, ProductListView, ProductView, ErrorView, ProductUpdateView, CartView, ClearCartView, CheckoutView
+from .views import HomeView, ProductCreateView, ProductListView, ProductView, ErrorView, ProductUpdateView, CartView, ClearCartView, CheckoutView, PaypalView, OrdersListView, DeleteOrderView
 from django.views.static import serve
 urlpatterns = [
     path("",HomeView.as_view(),name='home'),
@@ -17,6 +17,10 @@ urlpatterns = [
     path('clear-cart/', ClearCartView.as_view(), name='clear_cart'),
 
     path('checkout/', CheckoutView.as_view(), name='checkout'),
+    path('paypal/', PaypalView.as_view(), name='paypal'),
+    
+    path('orders/', OrdersListView.as_view(), name='orders'),
+    path('delete_order/<int:order_id>/', DeleteOrderView.as_view(), name='delete_order')
 
 
 ]

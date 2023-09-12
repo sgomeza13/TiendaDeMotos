@@ -15,3 +15,14 @@ class Rating(models.Model):
     user = models.ForeignKey(CustomerUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     rating = models.FloatField(default=0)
+
+
+class Orders(models.Model):
+    user = models.ForeignKey(CustomerUser, on_delete=models.CASCADE, blank= True, null = True)
+    name = models.CharField(max_length=255)
+    email = models.EmailField( max_length=255)
+    city = models.CharField(max_length=20)
+    address = models.CharField(max_length=255)  
+    product = models.CharField(max_length=255)
+    total_price = models.IntegerField()
+    created = models.DateTimeField(auto_now_add=True)

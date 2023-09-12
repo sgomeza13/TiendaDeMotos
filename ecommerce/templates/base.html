@@ -36,12 +36,13 @@
                 <a class="nav-link active" href="{% url 'login' %}">Iniciar Sesion</a>
                 <a class="nav-link active" href="{% url 'register' %}">Registrarse</a>
                 {%endif%}
-                <a class="nav-link active" href="{% url 'logout' %}">Cerrar sesion</a>
+                
                 
                 {% if user.is_authenticated == True%}
+                <a class="nav-link active" href="{% url 'orders' %}">Ordenes</a>
                 <a class="nav-link active text-underline-opacity-0">Ingresado como: {{user.email}}</a>
-                
                 {%endif%}
+                <a class="nav-link active" href="{% url 'logout' %}">Cerrar sesion</a>
             </div>
 
             </div>
@@ -60,7 +61,7 @@
                 <div class="container">
                     
                           <a class=" text-reset fw-bold text-decoration-none" target="_blank">
-                            Daniel Gonzales, Leonardo Rojas, Simon Gomez
+                            Daniel Gonzalez, Leonardo Rojas, Simon Gomez
                         </a>
                     
                 </div>

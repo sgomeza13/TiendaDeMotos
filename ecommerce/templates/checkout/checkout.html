@@ -49,6 +49,8 @@
       <input type="text" name="Ciudad" placeholder="Ciudad" required>
       <input type="text" name="Direccion" placeholder="Direccion" required>
     {% endif %}
+      <input type="hidden" name="product" value="{{ cart_items }}">
+      <input type="hidden" name="total_price" value="{{ total_price }}">
     
       <button type="submit" class="btn btn-primary">Finalizar compra</button>
     </form>
