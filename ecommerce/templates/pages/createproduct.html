@@ -16,7 +16,7 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST"  enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="d-grid gap-3">
 
@@ -36,7 +36,7 @@
                             {% endfor %}
                         </select>
                         <input type="file" class="form-control mb-2" placeholder="Enter image" name="image"
-                            value="{{form.data.image}}" />
+                        value="{{form.data.image}}" />
                         <input type="submit" class="btn btn-primary" value="Send" />
                     </div>
                     </form>

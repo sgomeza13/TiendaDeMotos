@@ -11,9 +11,7 @@
 {% endif %}
 
 <div class="card mb-3">
-    
     <div class="row g-0">
-        
         <div class="col-md-4">
             {%if product.image%}
             <img src="{{product.image}}" class="card-img-top img-card">
@@ -55,6 +53,15 @@
     </div>
 
 </div>
+<h5 class="fw-bold">Cantidad: </h5>
+<form method="POST" action="{% url 'cart' %}">
+    {% csrf_token %}
+    <input type="hidden" name="reference" value="{{ product.reference }}">
+
+    <input type="number" name="quantity" value="1" min="1">
+    <button type="submit" class="btn btn-success">Comprar</button>
+</form>
+
 
 <form method="POST">
     {% csrf_token %}

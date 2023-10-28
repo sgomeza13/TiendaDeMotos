@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+<h1>Lista de Ordenes</h1>
+<button id="generate-pdf" class="btn btn-primary">Generar PDF</button>
+
+<div class="order-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Direccion</th>
+                <th>Productos</th>
+                <th>Valor total</th>
+                <th>Fecha</th>
+                <th>Eliminar orden</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.name }}</td>
+                    <td>{{ order.email }}</td>
+                    <td>{{ order.city }},<br>{{ order.address }}</td>
+                    <td>{{ order.product }}</td>
+                    <td>${{ order.total_price }}</td>
+                    <td>{{ order.created }}</td>
+                    <td>
+                        <form method="GET" action="{% url 'delete_order' order.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="8">No hay ordenes</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+
+
+

@@ -3,6 +3,7 @@ from .models import Product, Rating
 
 class ProductForm(forms.ModelForm):
 
+
     class Meta:
         model = Product
         fields = ['name','price', 'description','brand','stock', 'reference', 'image']
@@ -40,3 +41,13 @@ class RatingForm(forms.ModelForm):
         (5,"5 - Calidad Excelente"),
     ]
     rating = forms.ChoiceField(label="Rating",choices=RATING_CHOICES)
+
+
+class OrdersForm(forms.Form):
+    Nombre = forms.CharField(max_length=255)
+    Email = forms.EmailField()
+    Ciudad = forms.CharField(max_length=20)
+    Direccion = forms.CharField(max_length=255)
+    product = forms.CharField(max_length=255)
+    total_price = forms.IntegerField(widget=forms.HiddenInput()) 
+

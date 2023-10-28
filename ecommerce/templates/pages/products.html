@@ -43,8 +43,7 @@
             <img src="{{product.image}}" class="card-img-top img-card">
           {%else%}
             <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
-          {%endif%}
-            <div class="card-body text-center">
+          {%endif%}            <div class="card-body text-center">
                 <a href="{% url 'product' id=product.id  %}" class="btn bg-primary text-white">
                     {{product.name}}</a>
                 <a class="btn bg-secondary text-light" href="{% url 'product' id=product.id  %}">{{product.price}}$</a>
