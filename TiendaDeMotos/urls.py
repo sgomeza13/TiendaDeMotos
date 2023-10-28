@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("ecommerce.urls")),
     path('account/', include("account.urls")),
+    path('api/',include("API.urls")),
 ]
 
 handler404 = ErrorView.as_view()
