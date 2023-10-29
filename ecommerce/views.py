@@ -1,16 +1,10 @@
-from typing import Any
-from django.conf import settings
-from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render, redirect
-from django.urls import reverse
 from django.views.generic import TemplateView, ListView, View, UpdateView
 from .forms import ProductForm, RatingForm, OrdersForm
 from .models import Product, Rating, Orders
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Q, Avg
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from django.db.models import Q, F, Avg
+
 
 
 # Create your views here.
@@ -284,6 +278,7 @@ class CheckoutView(View):
         return render(request, self.template_name, context)
     
     def post(self, request):
+        cart_items = request.session.get('cart', [])
         if request.method == 'POST':
             form = OrdersForm(request.POST)  # Replace with your actual form class
             if form.is_valid():
@@ -297,20 +292,27 @@ class CheckoutView(View):
                 total_price=form.cleaned_data['total_price']
             )
             order.save()
+            print(f"PRODUCTS: {self.products_in_cart}")
+            cart_items.update(stock=F('stock')-1)
+
+
             return redirect('paypal') 
         else:
             form = OrdersForm()  # Replace with your actual form class
 
 
 
-class OrdersListView(View):
+class OrdersListView(PermissionRequiredMixin, View):
+    permission_required = 'auth.is_superuser'
     template_name = 'orderlist/orders.html'
 
     def get(self, request):
         orders = Orders.objects.all()
         return render(request, self.template_name, {'orders': orders})
 
-class DeleteOrderView(View):
+class DeleteOrderView(PermissionRequiredMixin, View):
+    permission_required = 'auth.is_superuser'
+
     def get(self, request, order_id):
         try:
             order = Orders.objects.get(pk=order_id)
