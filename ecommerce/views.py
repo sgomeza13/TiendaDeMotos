@@ -3,7 +3,7 @@ from django.views.generic import TemplateView, ListView, View, UpdateView
 from .forms import ProductForm, RatingForm, OrdersForm
 from .models import Product, Rating, Orders
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Q, F, Avg
+from django.db.models import Q, Avg
 
 
 
@@ -57,6 +57,7 @@ class PaypalView(TemplateView):
             'user': user,
         }
 
+        request.session['cart'] = [] # Limpia el carrito
         return render(request, self.template_name, context)
 
 
@@ -177,7 +178,6 @@ class ProductView(View):
                     rate.user = request.user
                     rate.product = product
                     rate.save()
-
         return redirect('products')
 
 
@@ -197,6 +197,7 @@ class CartView(View):
                     'referencia': product.reference,
                     'cantidad': item['quantity'],
                     'precio': product.price,
+                    'id': product.id
                 })
             except Product.DoesNotExist:
                 pass
@@ -226,6 +227,7 @@ class CartView(View):
 
                 'reference': reference,
                 'quantity': quantity,
+                
             })
 
         # Update the cart in the session
@@ -243,7 +245,7 @@ class ClearCartView(View):
 
 class CheckoutView(View):
     template_name = 'checkout/checkout.html'
-
+    product_list = []
     def get(self, request):
         # Retrieve cart items from the session
         cart_items = request.session.get('cart', [])
@@ -262,6 +264,7 @@ class CheckoutView(View):
                     'cantidad': item['quantity'],
                     'precio': product.price,
                 })
+                self.product_list.append(product)
                 total_price += product.price * item['quantity']
             except Product.DoesNotExist:
                 pass
@@ -292,9 +295,11 @@ class CheckoutView(View):
                 total_price=form.cleaned_data['total_price']
             )
             order.save()
-            print(f"PRODUCTS: {self.products_in_cart}")
-            cart_items.update(stock=F('stock')-1)
-
+            # Se simula la compra del producto cuando presiona "finalizar compra", actualiza el stock y el carrito
+            for product,item in zip(self.product_list,cart_items):
+                product.stock = product.stock - item['quantity']
+                product.save()
+            
 
             return redirect('paypal') 
         else:
