@@ -3,7 +3,7 @@ from django.views.generic import TemplateView, ListView, View, UpdateView
 from .forms import ProductForm, RatingForm, OrdersForm
 from .models import Product, Rating, Orders
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, Count
 
 # Create your views here.
 class HomeView(ListView):
