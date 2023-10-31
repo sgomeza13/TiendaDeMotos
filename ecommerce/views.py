@@ -183,15 +183,19 @@ class ProductView(View):
 
 class CartView(View):
     template_name = 'cart/cart.html'
-
+    alert_message = ""
     def get(self, request):
         cart_items = request.session.get('cart', [])
         products_in_cart = []
+        
 
         # Retrieve product details based on product references in the cart
         for item in cart_items:
             try:
                 product = Product.objects.get(reference=item['reference'])
+                if(item['quantity'] > product.stock):
+                    item['quantity'] = product.stock
+                    self.alert_message = "Hemos actualizado su cantidad a comprar debido al stock disponible"
                 products_in_cart.append({
                     'nombre': product.name,
                     'referencia': product.reference,
@@ -204,13 +208,14 @@ class CartView(View):
 
         context = {
             'cart_items': products_in_cart,
+            'alert_message':self.alert_message
         }
 
         return render(request, self.template_name, context)
 
     def post(self, request):
         reference = request.POST.get('reference')
-        quantity = int(request.POST.get('quantity', 1))
+        quantity = int(request.POST.get('quantity', 1))        
 
         # Retrieve the cart from the session or create an empty cart
         cart_items = request.session.get('cart', [])
@@ -232,6 +237,8 @@ class CartView(View):
 
         # Update the cart in the session
         request.session['cart'] = cart_items
+        
+
 
         return redirect('cart')
 
