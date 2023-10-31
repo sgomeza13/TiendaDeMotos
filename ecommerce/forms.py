@@ -51,3 +51,4 @@ class OrdersForm(forms.Form):
     product = forms.CharField(max_length=255)
     total_price = forms.IntegerField(widget=forms.HiddenInput()) 
 
+    

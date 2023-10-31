@@ -1,17 +1,9 @@
-from typing import Any
-from django.conf import settings
-from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404, render, redirect
-from django.urls import reverse
 from django.views.generic import TemplateView, ListView, View, UpdateView
 from .forms import ProductForm, RatingForm, OrdersForm
 from .models import Product, Rating, Orders
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, Avg, Count
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-
 
 # Create your views here.
 class HomeView(ListView):
@@ -63,6 +55,7 @@ class PaypalView(TemplateView):
             'user': user,
         }
 
+        request.session['cart'] = [] # Limpia el carrito
         return render(request, self.template_name, context)
 
 
@@ -108,6 +101,7 @@ class ProductListView(ListView):
     template_name = 'pages/products.html'
     context_object_name = "products"
     form = ProductForm()
+    paginate_by = 12
 
     def get_queryset(self):
         query = self.request.GET.get("name")
@@ -185,39 +179,44 @@ class ProductView(View):
                     rate.user = request.user
                     rate.product = product
                     rate.save()
-
         return redirect('products')
 
 
 class CartView(View):
     template_name = 'cart/cart.html'
-
+    alert_message = ""
     def get(self, request):
         cart_items = request.session.get('cart', [])
         products_in_cart = []
+        
 
         # Retrieve product details based on product references in the cart
         for item in cart_items:
             try:
                 product = Product.objects.get(reference=item['reference'])
+                if(item['quantity'] > product.stock):
+                    item['quantity'] = product.stock
+                    self.alert_message = "Hemos actualizado su cantidad a comprar debido al stock disponible"
                 products_in_cart.append({
                     'nombre': product.name,
                     'referencia': product.reference,
                     'cantidad': item['quantity'],
                     'precio': product.price,
+                    'id': product.id
                 })
             except Product.DoesNotExist:
                 pass
 
         context = {
             'cart_items': products_in_cart,
+            'alert_message':self.alert_message
         }
 
         return render(request, self.template_name, context)
 
     def post(self, request):
         reference = request.POST.get('reference')
-        quantity = int(request.POST.get('quantity', 1))
+        quantity = int(request.POST.get('quantity', 1))        
 
         # Retrieve the cart from the session or create an empty cart
         cart_items = request.session.get('cart', [])
@@ -234,10 +233,13 @@ class CartView(View):
 
                 'reference': reference,
                 'quantity': quantity,
+                
             })
 
         # Update the cart in the session
         request.session['cart'] = cart_items
+        
+
 
         return redirect('cart')
 
@@ -251,7 +253,7 @@ class ClearCartView(View):
 
 class CheckoutView(View):
     template_name = 'checkout/checkout.html'
-
+    product_list = []
     def get(self, request):
         # Retrieve cart items from the session
         cart_items = request.session.get('cart', [])
@@ -270,6 +272,7 @@ class CheckoutView(View):
                     'cantidad': item['quantity'],
                     'precio': product.price,
                 })
+                self.product_list.append(product)
                 total_price += product.price * item['quantity']
             except Product.DoesNotExist:
                 pass
@@ -286,6 +289,7 @@ class CheckoutView(View):
         return render(request, self.template_name, context)
     
     def post(self, request):
+        cart_items = request.session.get('cart', [])
         if request.method == 'POST':
             form = OrdersForm(request.POST)  # Replace with your actual form class
             if form.is_valid():
@@ -299,20 +303,29 @@ class CheckoutView(View):
                 total_price=form.cleaned_data['total_price']
             )
             order.save()
+            # Se simula la compra del producto cuando presiona "finalizar compra", actualiza el stock y el carrito
+            for product,item in zip(self.product_list,cart_items):
+                product.stock = product.stock - item['quantity']
+                product.save()
+            
+
             return redirect('paypal') 
         else:
             form = OrdersForm()  # Replace with your actual form class
 
 
 
-class OrdersListView(View):
+class OrdersListView(PermissionRequiredMixin, View):
+    permission_required = 'auth.is_superuser'
     template_name = 'orderlist/orders.html'
 
     def get(self, request):
         orders = Orders.objects.all()
         return render(request, self.template_name, {'orders': orders})
 
-class DeleteOrderView(View):
+class DeleteOrderView(PermissionRequiredMixin, View):
+    permission_required = 'auth.is_superuser'
+
     def get(self, request, order_id):
         try:
             order = Orders.objects.get(pk=order_id)

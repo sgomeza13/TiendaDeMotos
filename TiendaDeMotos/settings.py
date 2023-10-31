@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ecommerce.apps.EcommerceConfig',
     'account.apps.AccountConfig',
+    'API.apps.ApiConfig',
+
+    #Third party apps:
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
