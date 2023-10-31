@@ -5,8 +5,6 @@ from .models import Product, Rating, Orders
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, Avg
 
-
-
 # Create your views here.
 class HomeView(ListView):
     model = Product
@@ -103,6 +101,7 @@ class ProductListView(ListView):
     template_name = 'pages/products.html'
     context_object_name = "products"
     form = ProductForm()
+    paginate_by = 12
 
     def get_queryset(self):
         query = self.request.GET.get("name")
