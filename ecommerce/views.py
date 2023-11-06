@@ -363,7 +363,7 @@ class CallFlaskAPI(View):
 
         if form.is_valid():
             number = form.cleaned_data['number']
-            flask_api_url = f'http://127.0.0.1:8080/factorial/{number}'  
+            flask_api_url = f'http://35.208.59.228/factorial/{number}'  
 
             try:
                 response = requests.get(flask_api_url)
