@@ -1,9 +1,12 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import TemplateView, ListView, View, UpdateView
-from .forms import ProductForm, RatingForm, OrdersForm
+from .forms import ProductForm, RatingForm, OrdersForm, FactorialInputForm
 from .models import Product, Rating, Orders
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, Avg, Count
+import requests
+# Create your views here.
 from .reports import generate_pdf_report, generate_excel_report
 from django.http import HttpResponse
 
@@ -290,7 +293,6 @@ class CheckoutView(View):
         return render(request, self.template_name, context)
 
     def post(self, request):
-        cart_items = request.session.get('cart', [])
         if request.method == 'POST':
             form = OrdersForm(request.POST)  # Replace with your actual form class
             if form.is_valid():
@@ -305,9 +307,8 @@ class CheckoutView(View):
                 )
             order.save()
             # Se simula la compra del producto cuando presiona "finalizar compra", actualiza el stock y el carrito
-            for product, item in zip(self.product_list, cart_items):
-                product.stock = product.stock - item['quantity']
-                product.save()
+
+            
 
             return redirect('paypal')
         else:
@@ -349,3 +350,32 @@ class DeleteOrderView(PermissionRequiredMixin, View):
         except Orders.DoesNotExist:
             pass
         return redirect('orders')
+
+class CallFlaskAPI(View):
+    template_name = 'pages/factorial.html'
+
+    def get(self, request):
+        form = FactorialInputForm()  
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = FactorialInputForm(request.POST)  
+
+        if form.is_valid():
+            number = form.cleaned_data['number']
+            flask_api_url = f'http://127.0.0.1:8080/factorial/{number}'  
+
+            try:
+                response = requests.get(flask_api_url)
+                response_text = response.text
+                print("Response from Flask API:", response_text)
+
+                return render(request, self.template_name, {'response_text': response_text})
+            except requests.exceptions.RequestException as e:
+                return HttpResponse(f"Error: {e}", status=500)
+
+        return render(request, self.template_name, {'form': form})
+
+        
+        
+    

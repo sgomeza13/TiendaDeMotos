@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import HomeView, ProductCreateView, ProductListView, ProductView, ErrorView, ProductUpdateView, CartView, ClearCartView, CheckoutView, PaypalView, OrdersListView, DeleteOrderView
+from .views import HomeView, ProductCreateView, ProductListView, ProductView, ErrorView, ProductUpdateView, CartView, ClearCartView, CheckoutView, PaypalView, OrdersListView, DeleteOrderView, CallFlaskAPI
 from django.views.static import serve
 urlpatterns = [
     path("",HomeView.as_view(),name='home'),
@@ -20,7 +20,9 @@ urlpatterns = [
     path('paypal/', PaypalView.as_view(), name='paypal'),
     
     path('orders/', OrdersListView.as_view(), name='orders'),
-    path('delete_order/<int:order_id>/', DeleteOrderView.as_view(), name='delete_order')
+    path('delete_order/<int:order_id>/', DeleteOrderView.as_view(), name='delete_order'),
+
+    path('getfactorial/', CallFlaskAPI.as_view(), name='factorial')
 
 
 ]
