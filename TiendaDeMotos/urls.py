@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from ecommerce.views import ErrorView
+from django.conf.urls.i18n import i18n_patterns
+from django.urls import re_path
+from django.views.i18n import set_language
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +26,11 @@ urlpatterns = [
     path('account/', include("account.urls")),
     path('api/',include("API.urls")),
 ]
+
+urlpatterns += i18n_patterns(
+    path('', include("ecommerce.urls")),
+    re_path(r'^set_language/$', set_language, name='set_language'),
+
+)
 
 handler404 = ErrorView.as_view()

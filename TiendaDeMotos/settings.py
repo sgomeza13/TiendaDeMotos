@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +25,16 @@ SECRET_KEY = 'django-insecure-mbg7_nzfg#f*-(-fp$o0&hl5(k2b5ma1wry$pgke=-sm^4=op)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('es', _('Spanish')),
+]
+
+# Locale path
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 ALLOWED_HOSTS = ['*']
 
@@ -53,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware' # This is for the translation
 ]
 
 ROOT_URLCONF = 'TiendaDeMotos.urls'

@@ -1,95 +1,95 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-
+{% extends 'base.html' %} {% load static %} {% load i18n %} {% block content %}
 {% if errors %}
 <ul id="errors" class="alert alert-danger list-unstyled">
-    
-    <li>{{ errors }}</li>
-
+  <li>{{ errors }}</li>
 </ul>
 {% endif %}
 
 <div class="card mb-3">
-    <div class="row g-0">
-        <div class="col-md-4">
-            {%if product.image%}
-            <img src="{{product.image}}" class="card-img-top img-card">
-          {%else%}
-            <img src="{% static 'products/icono_moto.svg' %}" class="card-img-top img-card">
-          {%endif%}
-
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h3 class="card-title">Nombre:</h3>
-                <p class="fst-normal">{{product.name}}</p>
-
-                <h5 class="fw-bold">Referencia:</h5>
-                <p class="fst-normal">{{product.reference}}</p>
-
-                <h5 class="fw-bold">Marca: </h5>
-                <p class="fst-normal">{{product.brand}}</p>
-
-                <h5 class="fw-bold">Precio:</h5>
-                <p class="fst-normal">{{product.price}}</p>
-
-
-                <h5 class="fw-bold">Descripcion:</h5>
-                <p class="fst-normal">{{product.description}}</p>
-
-
-                <h5 class="fw-bold">Unidades disponibles:</h5>
-                <p class="fst-normal">{{product.stock}}</p>
-
-                {% if rating.num_ratings == null %}
-                <h5 class="fw-bold">Calificacion:</h5>
-                <p class="fst-normal">No hay calificaciones aun</p>
-                {%else%}
-                <h5 class="fw-bold">Calificacion:</h5>
-                <p class="fst-normal">{{rating.rating__avg}} / 5</p>
-                <p class="fst-normal">Calificado por {{rating.num_ratings}} ususario(s)</p>
-                {%endif%}
-            </div>
-        </div>
-        
+  <div class="row g-0">
+    <div class="col-md-4">
+      {%if product.image%}
+      <img src="{{product.image}}" class="card-img-top img-card" />
+      {%else%}
+      <img
+        src="{% static 'products/icono_moto.svg' %}"
+        class="card-img-top img-card"
+      />
+      {%endif%}
     </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h3 class="card-title">{% trans "Name:" %}</h3>
+        <p class="fst-normal">{{product.name}}</p>
 
+        <h5 class="fw-bold">{% trans "Reference:" %}</h5>
+        <p class="fst-normal">{{product.reference}}</p>
+
+        <h5 class="fw-bold">{% trans "Brand:" %}</h5>
+        <p class="fst-normal">{{product.brand}}</p>
+
+        <h5 class="fw-bold">{% trans "Price:" %}</h5>
+        <p class="fst-normal">{{product.price}}</p>
+
+        <h5 class="fw-bold">{% trans "Description:" %}</h5>
+        <p class="fst-normal">{{product.description}}</p>
+
+        <h5 class="fw-bold">{% trans "Available units:" %}</h5>
+        <p class="fst-normal">{{product.stock}}</p>
+
+        {% if rating.num_ratings == null %}
+        <h5 class="fw-bold">{% trans "Rating:" %}</h5>
+        <p class="fst-normal">{% trans "No ratings yet" %}</p>
+        {%else%}
+        <h5 class="fw-bold">{% trans "Rating:" %}</h5>
+        <p class="fst-normal">{{rating.rating__avg}} / 5</p>
+        <p class="fst-normal">
+          {% trans "Rated by" %} {{rating.num_ratings}} {% trans "user(s)" %}
+        </p>
+        {%endif%}
+      </div>
+    </div>
+  </div>
 </div>
-<h5 class="fw-bold">Cantidad: </h5>
+<h5 class="fw-bold">{% trans "Quantity:" %}</h5>
 <form method="POST" action="{% url 'cart' %}">
-    {% csrf_token %}
-    <input type="hidden" name="reference" value="{{ product.reference }}">
+  {% csrf_token %}
+  <input type="hidden" name="reference" value="{{ product.reference }}" />
 
-    <input type="number" id="quantity" name="quantity" value="1" min="1">
+  <input type="number" id="quantity" name="quantity" value="1" min="1" />
 
-    <button type="submit" class="btn btn-success">Comprar</button>
-
-
-</form>
-
-
-<form method="POST">
-    {% csrf_token %}
-    {% if user.is_superuser == True%}
-    <input type="submit" class="btn btn-danger" value="Eliminar Producto" name="delete" />
-    <a class="btn btn-success" href="update/{{product.id}}">Actualizar Datos</a>  
-    {%endif%}
+  <button type="submit" class="btn btn-success">{% trans "Buy" %}</button>
 </form>
 
 <form method="POST">
-{% csrf_token %}
-{% if user.is_authenticated == True%}
-<div class="d-flex flex-column bd-highlight mb-3"> Dale una calificacion al producto
-<select name="{{ form.rating.name }}"  class="form-select p-2 bd-highlight">
-    {% for value, label in form.rating.field.choices %}
-        <option value="{{ value }}">{{ label }}</option>
-    {% endfor %}
-</select>
-</div>
-<input type="submit" class="btn btn-primary" value="Rate the product" name="rate" />
+  {% csrf_token %} {% if user.is_superuser == True%}
+  <input
+    type="submit"
+    class="btn btn-danger"
+    value="{% trans 'Delete Product' %}"
+    name="delete"
+  />
+  <a class="btn btn-success" href="update/{{product.id}}"
+    >{% trans 'Update Data' %}</a
+  >
+  {%endif%}
 </form>
-{%endif%}
-{% endblock %}
 
-
+<form method="POST">
+  {% csrf_token %} {% if user.is_authenticated == True%}
+  <div class="d-flex flex-column bd-highlight mb-3">
+    {% trans 'Rate the product' %}
+    <select name="{{ form.rating.name }}" class="form-select p-2 bd-highlight">
+      {% for value, label in form.rating.field.choices %}
+      <option value="{{ value }}">{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <input
+    type="submit"
+    class="btn btn-primary"
+    value="{% trans 'Rate the product' %}"
+    name="rate"
+  />
+</form>
+{%endif%} {% endblock %}

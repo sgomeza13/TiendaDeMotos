@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}Home Page{% endblock %}
 {% block content %}
-<h1 class="text-center">Bienvenido</h1>
+<h1 class="text-center">{% trans "Welcome to our store" %}</h1>
 {% if user.is_superuser == True %}
 <div class="container">
     <div class="col-md-12 text-center">
-    <big><a href="{% url 'create' %}" class="badge bg-primary text-wrap text-decoration-none">Añadir productos</a></big>
+    <big><a href="{% url 'create' %}" class="badge bg-primary text-wrap text-decoration-none">{% trans "Add products" %}</a></big>
         </div>
     </div>
     {%endif%}
-    <h1 class="text-center">Top 3 productos mejor calificados</h1>
+    <h1 class="text-center">{% trans "Top 3 best rated products" %}</h1>
 
     <div class="card-group">
         {% for product in products %}

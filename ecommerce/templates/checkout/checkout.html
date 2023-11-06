@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
 
-
-
-    <h2>Checkout</h2>
+    <h2>{% trans "Checkout" %}</h2>
 
     <table class="table">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Referencia</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
+          <th>{% trans "Name" %}</th>
+          <th>{% trans "Reference" %}</th>
+          <th>{% trans "Quantity" %}</th>
+          <th>{% trans "Price" %}</th>
           
         </tr>
       </thead>
@@ -29,7 +29,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="3"><strong>Total:</strong></td>
+          <td colspan="3"><strong>{% trans "Total" %}:</strong></td>
           <td><strong>${{ total_price }}</strong></td>
         </tr>
       </tfoot>
@@ -41,28 +41,22 @@
       {% csrf_token %}
       
       {% if user.is_authenticated %}
-      <input type="text" name="Nombre" value="{{ user.first_name }}" placeholder="Name" required>
-      <input type="email" name="Email" value="{{ user.email }}" placeholder="ID" required>
-      <input type="text" name="Ciudad" value="{{ user.city }}" placeholder="City" required>
-      <input type="text" name="Direccion" value="{{ user.address }}" placeholder="Address" required>
+      <input type="text" name="Nombre" value="{{ user.first_name }}" placeholder="{% trans 'Name' %}" required>
+      <input type="email" name="Email" value="{{ user.email }}" placeholder="{% trans 'ID' %}" required>
+      <input type="text" name="Ciudad" value="{{ user.city }}" placeholder="{% trans 'City' %}" required>
+      <input type="text" name="Direccion" value="{{ user.address }}" placeholder="{% trans 'Address' %}" required>
     {% else %}
-      <input type="text" name="Nombre" placeholder="Nombre" required>
-      <input type="email" name="Email" placeholder="Email" required>
-      <input type="text" name="Ciudad" placeholder="Ciudad" required>
-      <input type="text" name="Direccion" placeholder="Direccion" required>
+      <input type="text" name="Nombre" placeholder="{% trans 'Name' %}" required>
+      <input type="email" name="Email" placeholder="{% trans 'Email' %}" required>
+      <input type="text" name="Ciudad" placeholder="{% trans 'City' %}" required>
+      <input type="text" name="Direccion" placeholder="{% trans 'Address' %}" required>
     {% endif %}
       <input type="hidden" name="product" value="{{ cart_items }}">
       <input type="hidden" name="total_price" value="{{ total_price }}">
     
-      <button type="submit" class="btn btn-primary">Finalizar compra</button>
+      <button type="submit" class="btn btn-primary">{% trans "Finish purchase" %}</button>
     </form>
     
 
 
 {% endblock %}
-
-
-
-
-
-

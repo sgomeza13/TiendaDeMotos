@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -25,25 +26,40 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
-                <a class="nav-link active" href="{% url 'home' %}">Inicio</a>
+                <a class="nav-link active" href="{% url 'home' %}">{% trans "Home" %}</a>
                 <li class="nav-item">
-                <a class="nav-link active" href="{% url 'products' %}">Productos</a>
+                <a class="nav-link active" href="{% url 'products' %}">{%trans "Products"%}</a>
                 
                 </li>
-                <a class="nav-link active" href="{% url 'cart' %}">Carrito</a>
-                <a class="nav-link active" href="{% url 'factorial'%}">Calculadora</a>
+                <a class="nav-link active" href="{% url 'cart' %}">{% trans "Cart" %}</a>
+
+                <a class="nav-link active" href="{% url 'factorial'%}">Calculator</a>
                 {% if user.is_authenticated == False%}
-                <a class="nav-link active" href="{% url 'login' %}">Iniciar Sesion</a>
-                <a class="nav-link active" href="{% url 'register' %}">Registrarse</a>
+                <a class="nav-link active" href="{% url 'login' %}">{% trans "Log in" %}</a>
+                <a class="nav-link active" href="{% url 'register' %}">{% trans "Register" %}</a>
                 {%endif%}
                 
 
                 
                 {% if user.is_authenticated == True%}
-                <a class="nav-link active" href="{% url 'orders' %}">Ordenes</a>
-                <a class="nav-link active text-underline-opacity-0">Ingresado como: {{user.email}}</a>
+                <a class="nav-link active" href="{% url 'orders' %}">{% trans "Orders"%}</a>
+                <a class="nav-link active text-underline-opacity-0">{% trans "Logged in as"%}: {{user.email}}</a>
                 {%endif%}
-                <a class="nav-link active" href="{% url 'logout' %}">Cerrar sesion</a>
+                <a class="nav-link active" href="{% url 'logout' %}">{% trans "Log out"%}</a>
+                <form class="nav-link active" method="post" action="{% url 'set_language' %}">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    <select name="language" id="language-selector"> <!-- Agrega el ID "language-selector" -->
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ lang_name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+                
             </div>
 
             </div>
@@ -71,5 +87,14 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 crossorigin="anonymous">
 </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const languageSelector = document.getElementById("language-selector");
+                
+                    languageSelector.addEventListener("change", function() {
+                        this.form.submit(); // Envía el formulario cuando se seleccione un nuevo idioma
+                    });
+                });
+                </script>
 </body>
 </html>

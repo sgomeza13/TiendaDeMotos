@@ -1,0 +1,310 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-05 08:56-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: TiendaDeMotos/settings.py:30
+msgid "English"
+msgstr "English"
+
+#: TiendaDeMotos/settings.py:31
+msgid "Spanish"
+msgstr "Español"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Hello django"
+msgstr "Hola django"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Home"
+msgstr "Inicio"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Cart"
+msgstr "Carrito"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Register"
+msgstr "Registrarse"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Logged in as"
+msgstr "Ingresado como"
+
+#: TiendaDeMotos/ecommerce/templates/base.html
+msgid "Orders"
+msgstr "Órdenes"
+
+#: TiendaDeMotos/ecommerce/templates/error.html
+msgid "Something went wrong"
+msgstr "Algo salió mal"
+
+#: TiendaDeMotos/ecommerce/templates/pages/createProduct.html
+msgid "Create Product"
+msgstr "Crear Producto"
+
+#: TiendaDeMotos/ecommerce/templates/pages/home.html
+msgid "Add products"
+msgstr "Agregar productos"
+
+#: TiendaDeMotos/ecommerce/templates/pages/home.html
+msgid "Top 3 best rated products"
+msgstr "Top 3 productos mejor calificados"
+
+#: TiendaDeMotos/ecommerce/templates/pages/home.html
+msgid "Welcome to our store"
+msgstr "Bienvenido a nuestra tienda"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Name:"
+msgstr "Nombre:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Reference:"
+msgstr "Referencia:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Brand:"
+msgstr "Marca:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Price:"
+msgstr "Precio:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Description:"
+msgstr "Descripción:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Available units:"
+msgstr "Unidades disponibles:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Rating:"
+msgstr "Calificación:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "No ratings yet"
+msgstr "No hay calificaciones aún"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Rated by"
+msgstr "Calificado por"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "user(s)"
+msgstr "usuario(s)"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Quantity:"
+msgstr "Cantidad:"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Buy"
+msgstr "Comprar"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Delete product"
+msgstr "Eliminar producto"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Update data"
+msgstr "Actualizar datos"
+
+#: TiendaDeMotos/ecommerce/templates/pages/product.html
+msgid "Rate the product"
+msgstr "Califica este producto"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Search"
+msgstr "Buscar"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Filters"
+msgstr "Filtros"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Search by name or reference"
+msgstr "Buscar por nombre o referencia"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Minimum price"
+msgstr "Precio mínimo"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Maximum price"
+msgstr "Precio máximo"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Start"
+msgstr "Primero"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Previous"
+msgstr "Anterior"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Next"
+msgstr "Siguiente"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Page"
+msgstr "Página"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "of"
+msgstr "de"
+
+#: TiendaDeMotos/ecommerce/templates/pages/products.html
+msgid "Last"
+msgstr "Último"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Order list"
+msgstr "Lista de órdenes"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Export to PDF"
+msgstr "Exportar a PDF"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Export to Excel"
+msgstr "Exportar a Excel"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Order ID"
+msgstr "ID de la orden"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Name"
+msgstr "Nombre"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Address"
+msgstr "Dirección"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Products"
+msgstr "Productos"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Total price"
+msgstr "Precio total"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Date"
+msgstr "Fecha"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Delete order"
+msgstr "Eliminar orden"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "Delete"
+msgstr "Eliminar"
+
+#: TiendaDeMotos/ecommerce/templates/orderlist/orders.html
+msgid "No orders"
+msgstr "No hay órdenes"
+
+#: TiendaDeMotos/ecommerce/templates/cart/cart.html
+msgid "Shopping cart"
+msgstr "Carrito de compras"
+
+#: TiendaDeMotos/ecommerce/templates/cart/cart.html
+msgid "Reference"
+msgstr "Referencia"
+
+#: TiendaDeMotos/ecommerce/templates/cart/cart.html
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: TiendaDeMotos/ecommerce/templates/cart/cart.html
+msgid "Price"
+msgstr "Precio"
+
+#: TiendaDeMotos/ecommerce/templates/cart/cart.html
+msgid "Clear cart"
+msgstr "Vaciar carrito"
+
+#: TiendaDeMotos/ecommerce/templates/checkouts/checkout.html
+msgid "Checkout"
+msgstr "Pagar"
+
+#: TiendaDeMotos/ecommerce/templates/checkouts/checkout.html
+msgid "Finish purchase"
+msgstr "Finalizar compra"
+
+#: TiendaDeMotos/ecommerce/templates/checkouts/checkout.html
+msgid "City"
+msgstr "Ciudad"
+
+#: TiendaDeMotos/ecommerce/templates/checkouts/paypal.html
+msgid "Pay all your bills here"
+msgstr "Pague todas sus facturas aquí"
+
+#: TiendaDeMotos/ecommerce/templates/checkouts/paypal.html
+msgid "Thank you for your payment!"
+msgstr "¡Gracias por su pago!"
+
+#: TiendaDeMotos/ecommerce/templates/checkouts/paypal.html
+msgid "Moto parts"  
+msgstr "Moto partes"
+
+#: TiendaDeMotos/account/templates/pages/login.html
+msgid "Enter your email"
+msgstr "Ingrese su correo electrónico"
+
+#: TiendaDeMotos/account/templates/pages/login.html
+msgid "Enter your password"
+msgstr "Ingrese su contraseña"
+
+#: TiendaDeMotos/account/templates/pages/register.html
+msgid "User registry"
+msgstr "Registro de usuario"
+
+#: TiendaDeMotos/account/templates/pages/register.html
+msgid "Enter your first name"
+msgstr "Ingrese su primer nombre"
+
+#: TiendaDeMotos/account/templates/pages/register.html
+msgid "Enter your last name"
+msgstr "Ingrese su apellido"
+
+#: TiendaDeMotos/account/templates/pages/register.html
+msgid "Enter your address"
+msgstr "Ingrese su dirección"
+
+#: TiendaDeMotos/account/templates/pages/register.html
+msgid "Send"
+msgstr "Enviar"

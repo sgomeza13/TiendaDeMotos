@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tiendademotos
+    container_name: tiendademotos
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./TiendaDeMotos:/TiendaDeMotos
+    environment:
+      - DJANGO_SETTINGS_MODULE=TiendaDeMotos.settings
+      - DEBUG=True
+    command: python manage.py runserver 0.0.0.0:8000

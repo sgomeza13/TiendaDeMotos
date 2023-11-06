@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <!-- Search Bar  -->
 <div class="d-grid gap-3">
@@ -7,16 +8,16 @@
         <form method="GET">
         {% csrf_token %}
         <div class="input-group mb-3 text-align:center">
-            <input name="name" type="text" class="form-control text-center " placeholder="Buscar por nombre o referencia" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input name="name" type="text" class="form-control text-center " placeholder="{% trans 'Search by name or reference' %}" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <div class="btn-group">
               
-              <button class="btn btn-outline-secondary bg-primary text-light " type="submit">Buscar</button>
-              <button class="btn btn-outline-secondary bg-primary text-light" type="submit" value="" name="name">Reset</button>
+              <button class="btn btn-outline-secondary bg-primary text-light " type="submit">{% trans 'Search' %}</button>
+              <button class="btn btn-outline-secondary bg-primary text-light" type="submit" value="" name="name">{% trans 'Reset' %}</button>
             </div>
           </div>
         
           <button class="btn bg-info text-light my-3" type="button" data-bs-toggle="collapse" data-bs-target="#filtros" aria-expanded="false" aria-controls="collapseExample">
-            Filtros
+            {% trans 'Filters' %}
           </button>
           <div class="collapse" id="filtros">
           <select name="{{ form.brand.name }}" class="form-select" >
@@ -24,8 +25,8 @@
             <option value="{{ value }}">{{ label }}</option>
             {% endfor %}
             </select>
-            <input name="minprice" type="number" class="my-3 text-center " placeholder="Precio minimo">
-            <input name="maxprice" type="number" class="my-3 text-center " placeholder="Precio maximo">
+            <input name="minprice" type="number" class="my-3 text-center " placeholder="{% trans 'Minimum price' %}">
+            <input name="maxprice" type="number" class="my-3 text-center " placeholder="{% trans 'Maximum price' %}">
         </div>
         </div>
         </form>
@@ -63,19 +64,19 @@
   <ul class="pagination justify-content-center">
     
       {% if page_obj.has_previous %}
-      <li class="page-item"> <a href="?page=1" class="page-link">&laquo; Inicio</a></li>
-      <li class="page-item">   <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Anterior</a></li>
+      <li class="page-item"> <a href="?page=1" class="page-link">&laquo; {% trans 'Start' %}</a></li>
+      <li class="page-item">   <a href="?page={{ page_obj.previous_page_number }}" class="page-link">{% trans 'Previous' %}</a></li>
       {% endif %}
     
   
 
     <li class="page-item disabled">
-      <a class="page-link">  Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.</a>
+      <a class="page-link">  {% trans 'Page' %} {{ page_obj.number }} {% trans 'of' %} {{ page_obj.paginator.num_pages }}.</a>
     </li>
 
       {% if page_obj.has_next %}
-      <li class="page-item"> <a href="?page={{ page_obj.next_page_number }}" class="page-link">Siguiente</a></li>
-      <li class="page-item"> <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Ultimo &raquo;</a></li> 
+      <li class="page-item"> <a href="?page={{ page_obj.next_page_number }}" class="page-link">{% trans 'Next' %}</a></li>
+      <li class="page-item"> <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">{% trans 'Last' %} &raquo;</a></li> 
       {% endif %}
     </ul>
   </span>
