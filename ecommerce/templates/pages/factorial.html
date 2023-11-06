@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora</title>
+</head>
+<body>
+    <h1>Calcula tu credito</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">ingresar</button>
+    </form>
+    <p>{{ response_text }}</p>
+</body>
+</html>
+
+{% endblock %}

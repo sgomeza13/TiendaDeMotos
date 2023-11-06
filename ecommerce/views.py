@@ -1,10 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import TemplateView, ListView, View, UpdateView
-from .forms import ProductForm, RatingForm, OrdersForm
+from .forms import ProductForm, RatingForm, OrdersForm, FactorialInputForm
 from .models import Product, Rating, Orders
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q, Avg, Count
-
+import requests
 # Create your views here.
 class HomeView(ListView):
     model = Product
@@ -335,7 +336,30 @@ class DeleteOrderView(PermissionRequiredMixin, View):
             pass
         return redirect('orders')
 
+class CallFlaskAPI(View):
+    template_name = 'pages/factorial.html'
 
+    def get(self, request):
+        form = FactorialInputForm()  
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = FactorialInputForm(request.POST)  
+
+        if form.is_valid():
+            number = form.cleaned_data['number']
+            flask_api_url = f'http://127.0.0.1:8080/factorial/{number}'  
+
+            try:
+                response = requests.get(flask_api_url)
+                response_text = response.text
+                print("Response from Flask API:", response_text)
+
+                return render(request, self.template_name, {'response_text': response_text})
+            except requests.exceptions.RequestException as e:
+                return HttpResponse(f"Error: {e}", status=500)
+
+        return render(request, self.template_name, {'form': form})
 
         
         

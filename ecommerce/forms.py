@@ -51,4 +51,5 @@ class OrdersForm(forms.Form):
     product = forms.CharField(max_length=255)
     total_price = forms.IntegerField(widget=forms.HiddenInput()) 
 
-    
+class FactorialInputForm(forms.Form):
+    number = forms.IntegerField(label="Ingresa un numero:")
