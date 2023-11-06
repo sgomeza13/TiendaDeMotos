@@ -290,7 +290,6 @@ class CheckoutView(View):
         return render(request, self.template_name, context)
     
     def post(self, request):
-        cart_items = request.session.get('cart', [])
         if request.method == 'POST':
             form = OrdersForm(request.POST)  # Replace with your actual form class
             if form.is_valid():
@@ -305,9 +304,7 @@ class CheckoutView(View):
             )
             order.save()
             # Se simula la compra del producto cuando presiona "finalizar compra", actualiza el stock y el carrito
-            for product,item in zip(self.product_list,cart_items):
-                product.stock = product.stock - item['quantity']
-                product.save()
+
             
 
             return redirect('paypal') 
