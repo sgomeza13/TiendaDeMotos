@@ -1,4 +1,33 @@
-openpyxl==3.1.2
-Django==4.2.4
+asgiref @ file:///opt/conda/conda-bld/asgiref_1661287532135/work
+backports.zoneinfo @ file:///opt/conda/conda-bld/backports.zoneinfo_1661287532800/work
+Brotli @ file:///tmp/abs_ecyw11_7ze/croots/recipe/brotli-split_1659616059936/work
+certifi @ file:///croot/certifi_1690232220950/work/certifi
+cffi @ file:///croot/cffi_1670423208954/work
+charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+click @ file:///croot/click_1698129812380/work
+cryptography @ file:///croot/cryptography_1694444244250/work
+Django @ file:///opt/conda/conda-bld/django_1661296381686/work
 djangorestframework==3.14.0
-reportlab==3.6.8
+et-xmlfile==1.1.0
+factory-boy @ file:///tmp/build/80754af9/factory_boy_1609265804400/work
+Faker @ file:///croot/faker_1685460777692/work
+Flask @ file:///croot/flask_1671217343254/work
+idna @ file:///croot/idna_1666125576474/work
+importlib-metadata @ file:///croot/importlib-metadata_1678997070253/work
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///croot/jinja2_1666908132255/work
+MarkupSafe @ file:///opt/conda/conda-bld/markupsafe_1654597864307/work
+openpyxl==3.0.10
+Pillow==9.4.0
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pyOpenSSL @ file:///croot/pyopenssl_1690223430423/work
+PySocks @ file:///tmp/build/80754af9/pysocks_1605305779399/work
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pytz==2023.3.post1
+reportlab @ file:///croot/reportlab_1676300975584/work
+requests @ file:///croot/requests_1690400202158/work
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+sqlparse @ file:///croot/sqlparse_1690901927333/work
+urllib3 @ file:///croot/urllib3_1698257533958/work
+Werkzeug @ file:///croot/werkzeug_1679489717957/work
+zipp @ file:///croot/zipp_1672387121353/work
