@@ -1,5 +1,6 @@
 from django import forms
 from .models import Product, Rating
+from django.utils.translation import gettext_lazy as _
 
 class ProductForm(forms.ModelForm):
 
@@ -8,7 +9,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ['name','price', 'description','brand','stock', 'reference', 'image']
     BRAND_CHOICES = [
-        ("","Sin Marca/Cualquier Marca"),
+        ("","---"),
         ("Kawasaki", "Kawasaki"),
         ("Honda", "Honda"),
         ("Yamaha", "Yamaha"),

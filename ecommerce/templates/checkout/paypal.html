@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 <div id="smart-button-container">
     <div style="text-align: left;">
       <div style="margin-bottom: 1.25rem;">
-        <p> Paga Aqui todas tus facturas </p>
-        <select id="item-options"><option value="MotoPartes" price="1"> MotoPartes </option></select>
-        <select style="visibility: hidden" id="quantitySelect"><option value= {{ total_price }} >  {{ total_price }} </option></select>
+        <p>{% trans "Pay all your bills here" %}</p>
+        <select id="item-options">
+          <option value="MotoParts" price="1">{% trans "Moto Parts" %}</option>
+        </select>
+        <select style="visibility: hidden" id="quantitySelect">
+          <option value="{{ total_price }}">{{ total_price }}</option>
+        </select>
       </div>
     <div id="paypal-button-container"></div>
     </div>
@@ -20,9 +25,9 @@
   if (!isNaN(quantity)) {
     quantitySelect.style.visibility = "visible";
   }
-  var orderDescription = 'Paga aqui todas tus facturas';
+  var orderDescription = '{% trans "Pay all your bills here" %}';
   if(orderDescription === '') {
-    orderDescription = 'Item';
+    orderDescription = '{% trans "Item" %}';
   }
   paypal.Buttons({
     style: {
@@ -82,7 +87,7 @@
         // Show a success message within this page, e.g.
         const element = document.getElementById('paypal-button-container');
         element.innerHTML = '';
-        element.innerHTML = '<h3>Thank you for your payment!</h3>';
+        element.innerHTML = '<h3>{% trans "Thank you for your payment!" %}</h3>';
   
         // Or go to another URL:  actions.redirect('thank_you.html');
   

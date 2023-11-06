@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load i18n %}
 {% if error %}
 <ul id="errors" class="alert alert-danger list-unstyled">
 
@@ -8,16 +8,16 @@
 
 </ul>
 {% endif %}
-<h1>Ingresar</h1>
+<h1>{% trans "Log in" %}</h1>
 <form method="POST">
     {% csrf_token %}
-    <a>Ingrese su correo</a>
+    <a>{% trans "Enter your email" %}</a>
     <input type="text" class="form-control mb-2"  name="email" value="{{form.data.email}}" />
-    <a>Ingrese su contraseña *</a>
+    <a>{% trans "Enter your password" %} *</a>
     <input type="password" class="form-control mb-2" name="password" value="{{form.data.password }}" />
 
 
-    <input type="submit" class="btn btn-primary" value="Ingresar" />
+    <input type="submit" class="btn btn-primary" value="{% trans "Log in" %}" />
 </form>
 
 {% endblock %}
